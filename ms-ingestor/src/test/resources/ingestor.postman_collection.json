@@ -1,0 +1,290 @@
+{
+	"info": {
+		"_postman_id": "32e3b53a-e6d6-4d4a-8cfd-bb4ffffa8753",
+		"name": "ingestor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://localhost:8081/login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var json=JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"token\",json.token);\r",
+							"postman.setGlobalVariable(\"refresh\",json.refresh);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n    \"username\": \"admin\",\r\n    \"password\":\"admin\"\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:8081/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:8086/startJob/",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				},
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9XSwiand0VHlwZSI6IlRPS0VOIiwiZXhwIjoxNjUxNDUwMDA0fQ.xL8Mmx2a3-MAahuDgIwXRa3VaXxTtfdZRd69XXLmQ8GoLuQtWMAyX-LSRqsNKv8an0-5NShOggIRFqSYm4hl9g",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n    \"username\": \"apu\",\r\n    \"password\":\"aaaaa\"\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:8086/startJob?compareChanges=false",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8086",
+					"path": [
+						"startJob"
+					],
+					"query": [
+						{
+							"key": "compareChanges",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:8086/stopJob",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				},
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9XSwiand0VHlwZSI6IlRPS0VOIiwiZXhwIjoxNjUxNDUwMDA0fQ.xL8Mmx2a3-MAahuDgIwXRa3VaXxTtfdZRd69XXLmQ8GoLuQtWMAyX-LSRqsNKv8an0-5NShOggIRFqSYm4hl9g",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n    \"username\": \"apu\",\r\n    \"password\":\"aaaaa\"\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:8086/stopJob",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8086",
+					"path": [
+						"stopJob"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:8086/getJobStatus",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				},
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9XSwiand0VHlwZSI6IlRPS0VOIiwiZXhwIjoxNjUxNDUwMDA0fQ.xL8Mmx2a3-MAahuDgIwXRa3VaXxTtfdZRd69XXLmQ8GoLuQtWMAyX-LSRqsNKv8an0-5NShOggIRFqSYm4hl9g",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n    \"username\": \"apu\",\r\n    \"password\":\"aaaaa\"\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:8086/getJobStatus",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8086",
+					"path": [
+						"getJobStatus"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:8086/getProvidersStatus",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				},
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9XSwiand0VHlwZSI6IlRPS0VOIiwiZXhwIjoxNjUxNDUwMDA0fQ.xL8Mmx2a3-MAahuDgIwXRa3VaXxTtfdZRd69XXLmQ8GoLuQtWMAyX-LSRqsNKv8an0-5NShOggIRFqSYm4hl9g",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n    \"username\": \"apu\",\r\n    \"password\":\"aaaaa\"\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:8086/getJobStatus",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8086",
+					"path": [
+						"getJobStatus"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:8081/refresh",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:8081/refresh/{{refresh}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"refresh",
+						"{{refresh}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "bd6ffae4-301d-4102-a67a-cc60053a51b5",
+		"name": "retriever",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://localhost:8081/login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var json=JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"token\",json.token);\r",
+							"postman.setGlobalVariable(\"refresh\",json.refresh);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n    \"username\": \"nico\",\r\n    \"password\":\"nico\"\r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:8081/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:8082/get/",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				},
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:8082/get/WC1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"get",
+						"WC1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:8081/refresh",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:8081/refresh/{{refresh}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"refresh",
+						"{{refresh}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

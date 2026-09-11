@@ -1,0 +1,9 @@
+set BATCH_SIZE=10000
+set BATCH_CRON_NOCOMPARE=0 0 0 2-31 * *
+set BATCH_CRON_COMPARING=0 0 0 1 * *
+set DOWNLOAD_BUFFERSIZE=65536
+set DOWNLOAD_TIMEOUT=60000
+set MAPPING_SRC_URL=https://ussyst0001:JAroca6108c@www.world-check.com/portal/Downloads/world-check.csv.gz
+set MAPPING_ERRORS_IGNORE=true
+set MAPPING_ERRORS_MAX=500
+set MAPPING_SAVE_HISTORY=true

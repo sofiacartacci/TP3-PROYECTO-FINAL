@@ -1,0 +1,47 @@
+#docker run --name ms-screener ^
+#--network myNetwork ^
+#-v C:\$listas\logs:/var/logs ^
+#-v C:\$listas\cert:/var/cert ^
+#-v C:\$listas\stopwords:/var/stopwords ^
+#-v C:\$listasfiles\lucene-index:/var/lucene-index ^
+#-v C:\$listasfiles\lucene-index:/var/download ^
+#-v C:\$listasfiles\work:/var/work ^
+#-p 8087:8080 ^
+#-e JWT_SECRET_KEY -e KEYSTORE_PASS -e KEYSTORE_ALIAS -e TRUSTSTORE_PASS ^
+#-e BATCH_SIZE ^
+#-e DOWNLOAD_BUFFERSIZE -e DOWNLOAD_TIMEOUT ^
+#-e MAPPING_SRC_URL ^
+#-e MAPPING_ERRORS_IGNORE -e MAPPING_ERRORS_MAX ^
+#-e MAPPING_SAVE_HISTORY ^
+#-e SCREENER_SEARCHER_FORK_SIZE ^
+#-e SYSTECH-API-KEY  ^
+#ms-screener
+
+FROM adoptopenjdk/openjdk11:jre-11.0.6_10-alpine
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
+ENV LOG=/var/logs
+ENV JWT_SECRET_KEY=${JWT_SECRET_KEY}
+ENV JWT_EXP_TIME=60000
+ENV JWT_REF_TIME=600000
+ENV MONGO_PORT=27017
+ENV MONGO_HOST=host.docker.internal
+ENV MONGO_DATABASE=systechlist
+ENV KEYSTORE_FILE=/var/cert/systech.p12
+ENV KEYSTORE_PASS=${KEYSTORE_PASS}
+ENV KEYSTORE_ALIAS=${KEYSTORE_ALIAS}
+ENV TRUSTSTORE_FILE=/var/cert/truststore.p12
+ENV TRUSTSTORE_PASS=${TRUSTSTORE_PASS}
+ENV SYSTECH-API-KEY='${SYSTECH-API-KEY}'
+ENV INDEX_FOLDER=/var/lucene-index
+ENV MATCHER_INDEXPATH=/var/lucene-index
+ENV MATCHER_STOPWORDS_FILE=/var/stopwords/stopwords.txt
+ENV MATCHER_LOOK_FOR_CHANGES_IN_INDEX_CRON='*/30 * * * * *'
+ENV BATCH_SIZE=${BATCH_SIZE}
+ENV DOWNLOAD_BUFFERSIZE=${DOWNLOAD_BUFFERSIZE}
+ENV DOWNLOAD_TIMEOUT=${DOWNLOAD_TIMEOUT}
+ENV SCREENER_WORKDIR=/var/work
+ENV SCREENER_SEARCHER_URL=${SCREENER_SEARCHER_URL}
+ENV SCREENER_SEARCHER_FORK_SIZE=${SCREENER_SEARCHER_FORK_SIZE}
+ENV BILLER_URL=${BILLER_URL}

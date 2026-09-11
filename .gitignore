@@ -1,0 +1,16 @@
+﻿# IntelliJ
+.idea/
+*.iml
+
+# Maven
+target/
+
+# Certificados y secretos - NUNCA al repo
+cert/
+*.p12
+*.crt
+*.env
+
+# Logs e indices locales
+logs/
+lucene-index/
