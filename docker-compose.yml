@@ -1,0 +1,159 @@
+version: "3.8"
+
+services:
+
+  mongo:
+    image: mongo:6
+    container_name: mongo-smartlists
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  ms-authenticator:
+    build: ./ms-authenticator
+    container_name: ms-authenticator
+    ports:
+      - "8081:8080"
+    environment:
+      MONGO_HOST: mongo
+      MONGO_DATABASE: users
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      KEYSTORE_PASS: ${KEYSTORE_PASS}
+      KEYSTORE_ALIAS: ${KEYSTORE_ALIAS}
+      TRUSTSTORE_PASS: ${TRUSTSTORE_PASS}
+    volumes:
+      - ./cert:/var/cert:ro
+      - ./logs:/var/logs
+    depends_on:
+      - mongo
+
+  ms-retriever:
+    build: ./ms-retriever
+    container_name: ms-retriever
+    ports:
+      - "8082:8080"
+    environment:
+      MONGO_HOST: mongo
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      KEYSTORE_PASS: ${KEYSTORE_PASS}
+      KEYSTORE_ALIAS: ${KEYSTORE_ALIAS}
+      TRUSTSTORE_PASS: ${TRUSTSTORE_PASS}
+    volumes:
+      - ./cert:/var/cert:ro
+      - ./logs:/var/logs
+    depends_on:
+      - mongo
+
+  ms-searcher:
+    build: ./ms-searcher
+    container_name: ms-searcher
+    ports:
+      - "8083:8080"
+    environment:
+      MONGO_HOST: mongo
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      KEYSTORE_PASS: ${KEYSTORE_PASS}
+      KEYSTORE_ALIAS: ${KEYSTORE_ALIAS}
+      TRUSTSTORE_PASS: ${TRUSTSTORE_PASS}
+      SYSTECH-API-KEY: ${SYSTECH_API_KEY}
+      BILLER_URL: https://ms-biller:8080
+    volumes:
+      - ./cert:/var/cert:ro
+      - ./logs:/var/logs
+      - ./stopwords:/var/stopwords:ro
+      - lucene-index:/var/lucene-index
+    depends_on:
+      - mongo
+      - ms-biller
+
+  ms-biller:
+    build: ./ms-biller
+    container_name: ms-biller
+    ports:
+      - "8084:8080"
+    environment:
+      MONGO_HOST: mongo
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      KEYSTORE_PASS: ${KEYSTORE_PASS}
+      KEYSTORE_ALIAS: ${KEYSTORE_ALIAS}
+      TRUSTSTORE_PASS: ${TRUSTSTORE_PASS}
+    volumes:
+      - ./cert:/var/cert:ro
+      - ./logs:/var/logs
+    depends_on:
+      - mongo
+
+  ms-ingestor:
+    build: ./ms-ingestor
+    container_name: ms-ingestor
+    ports:
+      - "8086:8080"
+    environment:
+      MONGO_HOST: mongo
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      KEYSTORE_PASS: ${KEYSTORE_PASS}
+      KEYSTORE_ALIAS: ${KEYSTORE_ALIAS}
+      TRUSTSTORE_PASS: ${TRUSTSTORE_PASS}
+      SYSTECH-API-KEY: ${SYSTECH_API_KEY}
+    volumes:
+      - ./cert:/var/cert:ro
+      - ./logs:/var/logs
+      - ./stopwords:/var/stopwords:ro
+      - lucene-index:/var/lucene-index
+      - download-data:/var/download
+    depends_on:
+      - mongo
+
+  ms-screener:
+    build: ./ms-screener
+    container_name: ms-screener
+    ports:
+      - "8087:8080"
+    environment:
+      MONGO_HOST: mongo
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      KEYSTORE_PASS: ${KEYSTORE_PASS}
+      KEYSTORE_ALIAS: ${KEYSTORE_ALIAS}
+      TRUSTSTORE_PASS: ${TRUSTSTORE_PASS}
+      SYSTECH-API-KEY: ${SYSTECH_API_KEY}
+      SCREENER_SEARCHER_URL: https://ms-screener-searcher:8080
+      BILLER_URL: https://ms-biller:8080
+    volumes:
+      - ./cert:/var/cert:ro
+      - ./logs:/var/logs
+      - ./stopwords:/var/stopwords:ro
+      - lucene-index:/var/lucene-index
+      - work-data:/var/work
+    depends_on:
+      - mongo
+      - ms-screener-searcher
+      - ms-biller
+
+  ms-screener-searcher:
+    build: ./ms-screener-searcher
+    container_name: ms-screener-searcher
+    ports:
+      - "8088:8080"
+    environment:
+      MONGO_HOST: mongo
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      KEYSTORE_PASS: ${KEYSTORE_PASS}
+      KEYSTORE_ALIAS: ${KEYSTORE_ALIAS}
+      TRUSTSTORE_PASS: ${TRUSTSTORE_PASS}
+      SYSTECH-API-KEY: ${SYSTECH_API_KEY}
+      BILLER_URL: https://ms-biller:8080
+    volumes:
+      - ./cert:/var/cert:ro
+      - ./logs:/var/logs
+      - ./stopwords:/var/stopwords:ro
+      - lucene-index:/var/lucene-index
+    depends_on:
+      - mongo
+      - ms-biller
+
+volumes:
+  mongo-data:
+  lucene-index:
+  download-data:
+  work-data:
