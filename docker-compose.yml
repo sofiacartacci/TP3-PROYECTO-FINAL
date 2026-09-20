@@ -96,6 +96,25 @@ services:
       KEYSTORE_ALIAS: ${KEYSTORE_ALIAS}
       TRUSTSTORE_PASS: ${TRUSTSTORE_PASS}
       SYSTECH-API-KEY: ${SYSTECH_API_KEY}
+
+      BATCH_SIZE: 100
+      BATCH_CRON_NOCOMPARE: "0 0 0 * * *"
+      BATCH_CRON_COMPARING: "0 0 0 1 * *"
+      DOWNLOAD_BUFFERSIZE: 65536
+      DOWNLOAD_TIMEOUT: 30000
+
+      MAPPING_ID: MO
+      MAPPING_SRC_URL: http://host.docker.internal:9000/mock-list.zip
+      MAPPING_FILENAME: MO.csv
+      MAPPING_NAME: mock-list
+      MAPPING_DELIMITER: ";"
+      MAPPING_QUOTE: '"'
+      MAPPING_NULL: "-"
+      MAPPING_SEPARATOR: ";"
+      MAPPING_ERRORS_IGNORE: "true"
+      MAPPING_ERRORS_MAX: 1000
+      MAPPING_SAVE_HISTORY: "true"
+
     volumes:
       - ./cert:/var/cert:ro
       - ./logs:/var/logs
@@ -104,6 +123,9 @@ services:
       - download-data:/var/download
     depends_on:
       - mongo
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   ms-screener:
     build: ./ms-screener
