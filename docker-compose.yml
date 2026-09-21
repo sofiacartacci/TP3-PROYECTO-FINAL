@@ -84,6 +84,10 @@ services:
     depends_on:
       - mongo
 
+  mock-provider:
+    build: ./mock-provider
+    container_name: mock-provider
+
   ms-ingestor:
     build: ./ms-ingestor
     container_name: ms-ingestor
@@ -104,7 +108,7 @@ services:
       DOWNLOAD_TIMEOUT: 30000
 
       MAPPING_ID: MO
-      MAPPING_SRC_URL: http://host.docker.internal:9000/mock-list.zip
+      MAPPING_SRC_URL: http://mock-provider/mock-list.zip
       MAPPING_FILENAME: MO.csv
       MAPPING_NAME: mock-list
       MAPPING_DELIMITER: ";"
@@ -123,9 +127,7 @@ services:
       - download-data:/var/download
     depends_on:
       - mongo
-
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - mock-provider
 
   ms-screener:
     build: ./ms-screener
