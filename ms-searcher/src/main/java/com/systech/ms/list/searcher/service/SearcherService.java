@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -47,37 +48,39 @@ public class SearcherService {
 
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@Autowired
 	RestTemplate restTemplate;
-	
+
 	@Value("${biller.url}/bill")
 	String billerUrl;
-	
+
 	@Autowired
 	ApiKeyHeaders apiKeyHeaders;
 
-	public Result check(SearchQuery search) throws Exception {
+	public Result check(SearchQuery search, String authorization) throws Exception {
 		Date dde = new Date();
 		validateInput(search);
 		Result result = doCheck(search);
 		result.setElapsedTime(getElapsedTime(dde));
-		
-		Bill bill=modelMapper.map(result,Bill.class);
+
+		Bill bill = modelMapper.map(result, Bill.class);
 		bill.setRecords(1);
 		bill.setUser(result.getSearch().getUser());
-		bill.setUis(result.getCoincidences().stream().map(c->c.getUi()).collect(Collectors.toList()));
-		
-		logger.info("{}",bill);
-		
-		restTemplate.exchange(billerUrl, HttpMethod.POST, new HttpEntity<Bill>(bill,apiKeyHeaders.getApiKey()),Void.class);
+		bill.setUis(result.getCoincidences().stream().map(c -> c.getUi()).collect(Collectors.toList()));
+
+		logger.info("{}", bill);
+
+		HttpHeaders billerHeaders = new HttpHeaders();
+		billerHeaders.add("Authorization", authorization);
+		restTemplate.exchange(billerUrl, HttpMethod.POST, new HttpEntity<Bill>(bill, billerHeaders), Void.class);
 		return result;
 	}
 
 	private void validateInput(SearchQuery search) throws Exception {
 		if (search.getText() == null || search.getText().equals(""))
 			throw new Exception("Empty search text. Searched text is mandatory");
-		if (search.getMinLevel() == null )
+		if (search.getMinLevel() == null)
 			throw new Exception("Empty minLevel. MinLevel is mandatory");
 		if (search.getMinLevel() < 0)
 			search.setMinLevel(0);
@@ -103,7 +106,7 @@ public class SearcherService {
 			result.setCoincidencesCount(matches.size());
 		}
 
-		//se buscan todos los ui de una vez para mejor performance y se guardan en un map
+		// se buscan todos los ui de una vez para mejor performance y se guardan en un map
 		if (search.isShowDetails()) {
 			List<String> uis = matches.stream().map(ma -> ma.getUi()).collect(Collectors.toList());
 			Iterable<Reportado> reportados = repo.findAllById(uis);
@@ -131,7 +134,6 @@ public class SearcherService {
 		return result;
 	}
 
-	
 	private long getElapsedTime(Date timestamp) {
 		long elapsedtime = 0;
 		Date now = new java.util.Date();
