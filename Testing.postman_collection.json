@@ -1,17 +1,16 @@
 {
   "info": {
     "_postman_id": "ac24e873-2d6c-4faa-952b-c5d070c598a1",
-    "name": "Testing",
+    "name": "SmartLists - End to End",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "58419601",
-    "_collection_link": "https://go.postman.co/collection/58419601-ac24e873-2d6c-4faa-952b-c5d070c598a1?source=collection_link"
+    "_exporter_id": "58419601"
   },
   "item": [
     {
       "name": "authenticator",
       "item": [
         {
-          "name": "https://localhost:8081/login",
+          "name": "login",
           "event": [
             {
               "listen": "test",
@@ -45,7 +44,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \r\n    \"username\": \"admin\",\r\n    \"password\":\"admin\"\r\n}"
+              "raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\":\"admin\"\r\n}"
             },
             "url": {
               "raw": "https://localhost:8081/login",
@@ -93,10 +92,10 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"text\": \"asala\",\r\n    \"minLevel\": 50,\r\n    \"updatedAfter\": \"2000-01-27T00:00:00+00:00\",\r\n    \"includedCategories\": [\"NONCONVICTION TERROR\"],\r\n    \"includedKeywords\": [\"IRAN-WC\"],\r\n    \"excludedCategories\": [],\r\n    \"excludedSubCategories\": [],\r\n    \"excludedKeywords\": [],\r\n    \"includeIfDeprecatedAfter\": \"2000-01-27T00:00:00+00:00\",\r\n    \"searchAliases\": true,\r\n    \"showDetails\": true\r\n}",
+              "raw": "{\r\n    \"text\": \"Juan Fernández\",\r\n    \"minLevel\": 50,\r\n    \"searchAliases\": true,\r\n    \"showDetails\": true\r\n}",
               "options": {
                 "raw": {
-                  "language": "text"
+                  "language": "json"
                 }
               }
             },
@@ -112,89 +111,7 @@
               ]
             }
           },
-          "response": [
-            {
-              "name": "MatchExacto",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n    \"text\": \"Juan Fernández\",\r\n    \"minLevel\": 50 ,\r\n    \"searchAliases\": true,\r\n    \"showDetails\": true \r\n    }",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "https://localhost:8083/search",
-                  "protocol": "https",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8083",
-                  "path": [
-                    "search"
-                  ]
-                }
-              },
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "x-content-type-options",
-                  "value": "nosniff"
-                },
-                {
-                  "key": "x-xss-protection",
-                  "value": "1; mode=block"
-                },
-                {
-                  "key": "cache-control",
-                  "value": "no-cache, no-store, max-age=0, must-revalidate"
-                },
-                {
-                  "key": "pragma",
-                  "value": "no-cache"
-                },
-                {
-                  "key": "expires",
-                  "value": "0"
-                },
-                {
-                  "key": "strict-transport-security",
-                  "value": "max-age=31536000 ; includeSubDomains"
-                },
-                {
-                  "key": "content-type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "transfer-encoding",
-                  "value": "chunked"
-                },
-                {
-                  "key": "date",
-                  "value": "Wed, 23 Sep 2026 03:41:43 GMT"
-                },
-                {
-                  "key": "keep-alive",
-                  "value": "timeout=60"
-                },
-                {
-                  "key": "connection",
-                  "value": "keep-alive"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n  \"searchDate\": \"2026-09-23T03:41:43.404+00:00\",\n  \"returnCode\": \"1\",\n  \"returnMessage\": \"Search has returned 2 matching results\",\n  \"coincidencesCount\": 2,\n  \"coincidences\": [\n    {\n      \"ranking\": 0,\n      \"coincidenceLevel\": 100,\n      \"ui\": \"MO0000000001\",\n      \"tipo\": \"nam\",\n      \"detail\": {\n        \"ui\": \"MO0000000001\",\n        \"nam\": \"Juan Fernández\",\n        \"als\": [\n          \"J. Fernández\",\n          \"Juan Fernández Test\"\n        ],\n        \"ass\": [\n          \"Juan Fernandez\"\n        ],\n        \"category\": \"PEP\",\n        \"subcategory\": \"Politically Exposed Person\",\n        \"e_i\": \"I\",\n        \"title\": \"Mr\",\n        \"social_position\": \"Public Official\",\n        \"age\": \"65\",\n        \"dob\": \"1961-01-01\",\n        \"pob\": \"Buenos Aires\",\n        \"deceased\": \"\",\n        \"ids\": [\n          \"99000000001\",\n          \"MOCKP000001\",\n          \"MOCKID0000001\"\n        ],\n        \"locations\": [\n          \"Buenos Aires\",\n          \"Argentina\"\n        ],\n        \"countries\": [\n          \"Argentina\"\n        ],\n        \"companies\": [\n          \"Mock Company 2\",\n          \"Demo Holdings 2\"\n        ],\n        \"linked_to\": [\n          \"\"\n        ],\n        \"further_information\": \"Fictitious mock record 1 for Smart Lists testing only\",\n        \"keywords\": [\n          \"mock\",\n          \"test\",\n          \"pep\"\n        ],\n        \"external_sources\": [\n          \"MockSourceA\",\n          \"MockSourceB\"\n        ],\n        \"age_date\": \"2026/09/20\",\n        \"editor\": \"MOCK_GENERATOR\",\n        \"entered\": \"2026-08-02T00:00:00.000+00:00\",\n        \"updated\": \"2026-09-02T00:00:00.000+00:00\",\n        \"deprecated\": null,\n        \"sysInsert\": null,\n        \"sysUpdate\": \"2026-09-22T18:20:54.574+00:00\",\n        \"sysUpdateRelevante\": null\n      }\n    },\n    {\n      \"ranking\": 1,\n      \"coincidenceLevel\": 76.47058868408203,\n      \"ui\": \"MO0000000001\",\n      \"tipo\": \"als\",\n      \"detail\": {\n        \"ui\": \"MO0000000001\",\n        \"nam\": \"Juan Fernández\",\n        \"als\": [\n          \"J. Fernández\",\n          \"Juan Fernández Test\"\n        ],\n        \"ass\": [\n          \"Juan Fernandez\"\n        ],\n        \"category\": \"PEP\",\n        \"subcategory\": \"Politically Exposed Person\",\n        \"e_i\": \"I\",\n        \"title\": \"Mr\",\n        \"social_position\": \"Public Official\",\n        \"age\": \"65\",\n        \"dob\": \"1961-01-01\",\n        \"pob\": \"Buenos Aires\",\n        \"deceased\": \"\",\n        \"ids\": [\n          \"99000000001\",\n          \"MOCKP000001\",\n          \"MOCKID0000001\"\n        ],\n        \"locations\": [\n          \"Buenos Aires\",\n          \"Argentina\"\n        ],\n        \"countries\": [\n          \"Argentina\"\n        ],\n        \"companies\": [\n          \"Mock Company 2\",\n          \"Demo Holdings 2\"\n        ],\n        \"linked_to\": [\n          \"\"\n        ],\n        \"further_information\": \"Fictitious mock record 1 for Smart Lists testing only\",\n        \"keywords\": [\n          \"mock\",\n          \"test\",\n          \"pep\"\n        ],\n        \"external_sources\": [\n          \"MockSourceA\",\n          \"MockSourceB\"\n        ],\n        \"age_date\": \"2026/09/20\",\n        \"editor\": \"MOCK_GENERATOR\",\n        \"entered\": \"2026-08-02T00:00:00.000+00:00\",\n        \"updated\": \"2026-09-02T00:00:00.000+00:00\",\n        \"deprecated\": null,\n        \"sysInsert\": null,\n        \"sysUpdate\": \"2026-09-22T18:20:54.574+00:00\",\n        \"sysUpdateRelevante\": null\n      }\n    }\n  ],\n  \"search\": {\n    \"idSearch\": \"aae27839-e684-46f2-9425-859312ced6cf\",\n    \"text\": \"Juan Fernández\",\n    \"updatedAfter\": null,\n    \"minLevel\": 50,\n    \"includedCategories\": null,\n    \"includedSubCategories\": null,\n    \"includedKeywords\": null,\n    \"includedCountries\": null,\n    \"excludedCategories\": null,\n    \"excludedSubCategories\": null,\n    \"excludedKeywords\": null,\n    \"excludedCountries\": null,\n    \"includeIfDeprecatedAfter\": null,\n    \"searchAliases\": true,\n    \"showDetails\": true,\n    \"user\": \"admin\"\n  },\n  \"elapsedTime\": 10,\n  \"cost\": 120,\n  \"params\": {\n    \"matchdepth\": 0,\n    \"matchprlen\": 2,\n    \"matchminto\": \"\",\n    \"matchmaxhits\": 100000,\n    \"matchmaxres\": 100\n  },\n  \"parsedQuery\": \"+(+(text:juan~0 text:j.u.a.n) +(text:fernandez~0 text:f.e.r.n.a.n.d.e.z)) +dep:[0 TO 0]\"\n}"
-            }
-          ]
+          "response": []
         },
         {
           "name": "MatchFuzzy",
@@ -223,10 +140,10 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"text\": \"J. Fernández\",\r\n    \"minLevel\": 50.0 ,\r\n    \"searchAliases\": true,\r\n    \"showDetails\": true \r\n}",
+              "raw": "{\r\n    \"text\": \"J. Fernández\",\r\n    \"minLevel\": 50.0,\r\n    \"searchAliases\": true,\r\n    \"showDetails\": true\r\n}",
               "options": {
                 "raw": {
-                  "language": "text"
+                  "language": "json"
                 }
               }
             },
@@ -242,89 +159,7 @@
               ]
             }
           },
-          "response": [
-            {
-              "name": "MatchFuzzy",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n    \"text\": \"J. Fernández\",\r\n    \"minLevel\": 50.0 ,\r\n    \"searchAliases\": true,\r\n    \"showDetails\": true \r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "text"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "https://localhost:8083/search",
-                  "protocol": "https",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8083",
-                  "path": [
-                    "search"
-                  ]
-                }
-              },
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "x-content-type-options",
-                  "value": "nosniff"
-                },
-                {
-                  "key": "x-xss-protection",
-                  "value": "1; mode=block"
-                },
-                {
-                  "key": "cache-control",
-                  "value": "no-cache, no-store, max-age=0, must-revalidate"
-                },
-                {
-                  "key": "pragma",
-                  "value": "no-cache"
-                },
-                {
-                  "key": "expires",
-                  "value": "0"
-                },
-                {
-                  "key": "strict-transport-security",
-                  "value": "max-age=31536000 ; includeSubDomains"
-                },
-                {
-                  "key": "content-type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "transfer-encoding",
-                  "value": "chunked"
-                },
-                {
-                  "key": "date",
-                  "value": "Wed, 23 Sep 2026 03:41:52 GMT"
-                },
-                {
-                  "key": "keep-alive",
-                  "value": "timeout=60"
-                },
-                {
-                  "key": "connection",
-                  "value": "keep-alive"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n  \"searchDate\": \"2026-09-23T03:41:52.001+00:00\",\n  \"returnCode\": \"1\",\n  \"returnMessage\": \"Search has returned 3 matching results\",\n  \"coincidencesCount\": 3,\n  \"coincidences\": [\n    {\n      \"ranking\": 0,\n      \"coincidenceLevel\": 100,\n      \"ui\": \"MO0000000001\",\n      \"tipo\": \"als\",\n      \"detail\": {\n        \"ui\": \"MO0000000001\",\n        \"nam\": \"Juan Fernández\",\n        \"als\": [\n          \"J. Fernández\",\n          \"Juan Fernández Test\"\n        ],\n        \"ass\": [\n          \"Juan Fernandez\"\n        ],\n        \"category\": \"PEP\",\n        \"subcategory\": \"Politically Exposed Person\",\n        \"e_i\": \"I\",\n        \"title\": \"Mr\",\n        \"social_position\": \"Public Official\",\n        \"age\": \"65\",\n        \"dob\": \"1961-01-01\",\n        \"pob\": \"Buenos Aires\",\n        \"deceased\": \"\",\n        \"ids\": [\n          \"99000000001\",\n          \"MOCKP000001\",\n          \"MOCKID0000001\"\n        ],\n        \"locations\": [\n          \"Buenos Aires\",\n          \"Argentina\"\n        ],\n        \"countries\": [\n          \"Argentina\"\n        ],\n        \"companies\": [\n          \"Mock Company 2\",\n          \"Demo Holdings 2\"\n        ],\n        \"linked_to\": [\n          \"\"\n        ],\n        \"further_information\": \"Fictitious mock record 1 for Smart Lists testing only\",\n        \"keywords\": [\n          \"mock\",\n          \"test\",\n          \"pep\"\n        ],\n        \"external_sources\": [\n          \"MockSourceA\",\n          \"MockSourceB\"\n        ],\n        \"age_date\": \"2026/09/20\",\n        \"editor\": \"MOCK_GENERATOR\",\n        \"entered\": \"2026-08-02T00:00:00.000+00:00\",\n        \"updated\": \"2026-09-02T00:00:00.000+00:00\",\n        \"deprecated\": null,\n        \"sysInsert\": null,\n        \"sysUpdate\": \"2026-09-22T18:20:54.574+00:00\",\n        \"sysUpdateRelevante\": null\n      }\n    },\n    {\n      \"ranking\": 1,\n      \"coincidenceLevel\": 76.92308044433594,\n      \"ui\": \"MO0000000001\",\n      \"tipo\": \"nam\",\n      \"detail\": {\n        \"ui\": \"MO0000000001\",\n        \"nam\": \"Juan Fernández\",\n        \"als\": [\n          \"J. Fernández\",\n          \"Juan Fernández Test\"\n        ],\n        \"ass\": [\n          \"Juan Fernandez\"\n        ],\n        \"category\": \"PEP\",\n        \"subcategory\": \"Politically Exposed Person\",\n        \"e_i\": \"I\",\n        \"title\": \"Mr\",\n        \"social_position\": \"Public Official\",\n        \"age\": \"65\",\n        \"dob\": \"1961-01-01\",\n        \"pob\": \"Buenos Aires\",\n        \"deceased\": \"\",\n        \"ids\": [\n          \"99000000001\",\n          \"MOCKP000001\",\n          \"MOCKID0000001\"\n        ],\n        \"locations\": [\n          \"Buenos Aires\",\n          \"Argentina\"\n        ],\n        \"countries\": [\n          \"Argentina\"\n        ],\n        \"companies\": [\n          \"Mock Company 2\",\n          \"Demo Holdings 2\"\n        ],\n        \"linked_to\": [\n          \"\"\n        ],\n        \"further_information\": \"Fictitious mock record 1 for Smart Lists testing only\",\n        \"keywords\": [\n          \"mock\",\n          \"test\",\n          \"pep\"\n        ],\n        \"external_sources\": [\n          \"MockSourceA\",\n          \"MockSourceB\"\n        ],\n        \"age_date\": \"2026/09/20\",\n        \"editor\": \"MOCK_GENERATOR\",\n        \"entered\": \"2026-08-02T00:00:00.000+00:00\",\n        \"updated\": \"2026-09-02T00:00:00.000+00:00\",\n        \"deprecated\": null,\n        \"sysInsert\": null,\n        \"sysUpdate\": \"2026-09-22T18:20:54.574+00:00\",\n        \"sysUpdateRelevante\": null\n      }\n    },\n    {\n      \"ranking\": 2,\n      \"coincidenceLevel\": 58.82353210449219,\n      \"ui\": \"MO0000000001\",\n      \"tipo\": \"als\",\n      \"detail\": {\n        \"ui\": \"MO0000000001\",\n        \"nam\": \"Juan Fernández\",\n        \"als\": [\n          \"J. Fernández\",\n          \"Juan Fernández Test\"\n        ],\n        \"ass\": [\n          \"Juan Fernandez\"\n        ],\n        \"category\": \"PEP\",\n        \"subcategory\": \"Politically Exposed Person\",\n        \"e_i\": \"I\",\n        \"title\": \"Mr\",\n        \"social_position\": \"Public Official\",\n        \"age\": \"65\",\n        \"dob\": \"1961-01-01\",\n        \"pob\": \"Buenos Aires\",\n        \"deceased\": \"\",\n        \"ids\": [\n          \"99000000001\",\n          \"MOCKP000001\",\n          \"MOCKID0000001\"\n        ],\n        \"locations\": [\n          \"Buenos Aires\",\n          \"Argentina\"\n        ],\n        \"countries\": [\n          \"Argentina\"\n        ],\n        \"companies\": [\n          \"Mock Company 2\",\n          \"Demo Holdings 2\"\n        ],\n        \"linked_to\": [\n          \"\"\n        ],\n        \"further_information\": \"Fictitious mock record 1 for Smart Lists testing only\",\n        \"keywords\": [\n          \"mock\",\n          \"test\",\n          \"pep\"\n        ],\n        \"external_sources\": [\n          \"MockSourceA\",\n          \"MockSourceB\"\n        ],\n        \"age_date\": \"2026/09/20\",\n        \"editor\": \"MOCK_GENERATOR\",\n        \"entered\": \"2026-08-02T00:00:00.000+00:00\",\n        \"updated\": \"2026-09-02T00:00:00.000+00:00\",\n        \"deprecated\": null,\n        \"sysInsert\": null,\n        \"sysUpdate\": \"2026-09-22T18:20:54.574+00:00\",\n        \"sysUpdateRelevante\": null\n      }\n    }\n  ],\n  \"search\": {\n    \"idSearch\": \"66a7c2bc-01a0-4ce9-8fc1-35b6a3b60f1a\",\n    \"text\": \"J. Fernández\",\n    \"updatedAfter\": null,\n    \"minLevel\": 50,\n    \"includedCategories\": null,\n    \"includedSubCategories\": null,\n    \"includedKeywords\": null,\n    \"includedCountries\": null,\n    \"excludedCategories\": null,\n    \"excludedSubCategories\": null,\n    \"excludedKeywords\": null,\n    \"excludedCountries\": null,\n    \"includeIfDeprecatedAfter\": null,\n    \"searchAliases\": true,\n    \"showDetails\": true,\n    \"user\": \"admin\"\n  },\n  \"elapsedTime\": 13,\n  \"cost\": 120,\n  \"params\": {\n    \"matchdepth\": 0,\n    \"matchprlen\": 2,\n    \"matchminto\": \"\",\n    \"matchmaxhits\": 100000,\n    \"matchmaxres\": 100\n  },\n  \"parsedQuery\": \"+(+(text:j text:j*) +(text:fernandez~0 text:f.e.r.n.a.n.d.e.z)) +dep:[0 TO 0]\"\n}"
-            }
-          ]
+          "response": []
         },
         {
           "name": "SinCoincidencia",
@@ -353,10 +188,10 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"text\": \"Nadie 123\",\r\n    \"minLevel\": 10 , \r\n    \"searchAliases\": true,\r\n    \"showDetails\": true \r\n}",
+              "raw": "{\r\n    \"text\": \"Nadie 123\",\r\n    \"minLevel\": 10,\r\n    \"searchAliases\": true,\r\n    \"showDetails\": true\r\n}",
               "options": {
                 "raw": {
-                  "language": "text"
+                  "language": "json"
                 }
               }
             },
@@ -372,89 +207,63 @@
               ]
             }
           },
-          "response": [
-            {
-              "name": "SinCoincidencia",
-              "originalRequest": {
-                "method": "POST",
-                "header": [
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\r\n    \"text\": \"Nadie 123\",\r\n    \"minLevel\": 10 , \r\n    \"searchAliases\": true,\r\n    \"showDetails\": true \r\n}",
-                  "options": {
-                    "raw": {
-                      "language": "text"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "https://localhost:8083/search",
-                  "protocol": "https",
-                  "host": [
-                    "localhost"
-                  ],
-                  "port": "8083",
-                  "path": [
-                    "search"
-                  ]
-                }
-              },
-              "_postman_previewlanguage": "json",
-              "header": [
-                {
-                  "key": "x-content-type-options",
-                  "value": "nosniff"
-                },
-                {
-                  "key": "x-xss-protection",
-                  "value": "1; mode=block"
-                },
-                {
-                  "key": "cache-control",
-                  "value": "no-cache, no-store, max-age=0, must-revalidate"
-                },
-                {
-                  "key": "pragma",
-                  "value": "no-cache"
-                },
-                {
-                  "key": "expires",
-                  "value": "0"
-                },
-                {
-                  "key": "strict-transport-security",
-                  "value": "max-age=31536000 ; includeSubDomains"
-                },
-                {
-                  "key": "content-type",
-                  "value": "application/json"
-                },
-                {
-                  "key": "transfer-encoding",
-                  "value": "chunked"
-                },
-                {
-                  "key": "date",
-                  "value": "Wed, 23 Sep 2026 03:41:56 GMT"
-                },
-                {
-                  "key": "keep-alive",
-                  "value": "timeout=60"
-                },
-                {
-                  "key": "connection",
-                  "value": "keep-alive"
-                }
-              ],
-              "cookie": [],
-              "body": "{\n  \"searchDate\": \"2026-09-23T03:41:56.809+00:00\",\n  \"returnCode\": \"0\",\n  \"returnMessage\": \"No matching results found\",\n  \"coincidencesCount\": 0,\n  \"coincidences\": [],\n  \"search\": {\n    \"idSearch\": \"413625c9-86d4-449e-a8fa-2aa23dd0f2d7\",\n    \"text\": \"Nadie 123\",\n    \"updatedAfter\": null,\n    \"minLevel\": 10,\n    \"includedCategories\": null,\n    \"includedSubCategories\": null,\n    \"includedKeywords\": null,\n    \"includedCountries\": null,\n    \"excludedCategories\": null,\n    \"excludedSubCategories\": null,\n    \"excludedKeywords\": null,\n    \"excludedCountries\": null,\n    \"includeIfDeprecatedAfter\": null,\n    \"searchAliases\": true,\n    \"showDetails\": true,\n    \"user\": \"admin\"\n  },\n  \"elapsedTime\": 4,\n  \"cost\": 120,\n  \"params\": {\n    \"matchdepth\": 0,\n    \"matchprlen\": 2,\n    \"matchminto\": \"\",\n    \"matchmaxhits\": 100000,\n    \"matchmaxres\": 100\n  },\n  \"parsedQuery\": \"+(+(text:nadie~0 text:n.a.d.i.e) +text:123~0) +dep:[0 TO 0]\"\n}"
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "bearer"
+      }
+    },
+    {
+      "name": "biller",
+      "item": [
+        {
+          "name": "getUserTotal",
+          "protocolProfileBehavior": {
+            "disabledSystemHeaders": {
+              "content-type": true
             }
-          ]
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"user\": \"admin\",\r\n    \"from\": \"2026-01-01T00:00:00+00:00\",\r\n    \"to\": \"2026-12-31T23:59:59+00:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:8084/getUserTotal",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "8084",
+              "path": [
+                "getUserTotal"
+              ]
+            }
+          },
+          "response": []
         }
       ],
       "auth": {
