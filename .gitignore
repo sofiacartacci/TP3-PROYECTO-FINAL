@@ -14,3 +14,8 @@ cert/
 # Logs e indices locales
 logs/
 lucene-index/
+
+# Datasets y resultados generados por la medicion de linea base
+# (se reproducen con perf/generate-dataset.py y perf/run-baseline.sh)
+mock-provider/MO-[0-9]*.csv
+perf/results/*.json

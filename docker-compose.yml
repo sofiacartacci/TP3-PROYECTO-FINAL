@@ -85,7 +85,10 @@ services:
       - mongo
 
   mock-provider:
-    build: ./mock-provider
+    build:
+      context: ./mock-provider
+      args:
+        LIST_FILE: ${MOCK_LIST_FILE:-MO.csv}
     container_name: mock-provider
 
   ms-ingestor:
@@ -175,6 +178,21 @@ services:
     depends_on:
       - mongo
       - ms-biller
+
+  # Herramienta de carga para la Linea Base 1.0. No levanta con "up": hay que
+  # invocarla con "docker compose run --rm k6 run /perf/baseline.js".
+  # Corre dentro de la red del ecosistema, asi resuelve los nombres de servicio.
+  k6:
+    image: grafana/k6:latest
+    profiles: ["perf"]
+    entrypoint: ["k6"]
+    volumes:
+      - ./perf:/perf
+    environment:
+      AUTH_URL: https://ms-authenticator:8080
+      SEARCH_URL: https://ms-searcher:8080
+      USERNAME: ${PERF_USERNAME:-admin}
+      PASSWORD: ${PERF_PASSWORD:-admin}
 
 volumes:
   mongo-data:

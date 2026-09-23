@@ -1,0 +1,3 @@
+# El runner de la linea base se ejecuta en WSL/Ubuntu: si Git lo convierte a
+# CRLF al hacer checkout en Windows, el shebang y los comandos se rompen.
+perf/*.sh text eol=lf
