@@ -15,6 +15,10 @@
 
 set -euo pipefail
 
+# BuildKit intenta usar una consola interactiva para el progreso y falla
+# ("failed to get console") cuando la salida del build se redirige.
+export BUILDKIT_PROGRESS=plain
+
 DATASET="${1:-1000}"
 VU_LEVELS="${VU_LEVELS:-1 5 10 20}"
 DURATION="${DURATION:-60s}"
@@ -83,7 +87,11 @@ mongo_eval systechlist 'db.listas.deleteMany({})' >/dev/null 2>&1 \
 
 # ------------------------------------------------------------ levantar base
 step "Levantando mock-provider, authenticator y biller"
-MOCK_LIST_FILE="MO-${DATASET}.csv" docker compose up -d --build mock-provider >/dev/null
+# El build escribe a la terminal: si se redirige, el escritor de progreso
+# aborta con "failed to get console: provided file is not a console".
+export MOCK_LIST_FILE="MO-${DATASET}.csv"
+docker compose build mock-provider
+docker compose up -d mock-provider >/dev/null
 docker compose up -d ms-authenticator ms-biller >/dev/null
 wait_for "$AUTH_LOCAL/login" "ms-authenticator"
 
@@ -127,7 +135,7 @@ BILL_ANTES="$(curl -ks -X POST "https://localhost:8084/getUserTotal" -H "Authori
 
 # ------------------------------------------------------------- medicion
 run_k6() {                        # run_k6 <label> <vus> <duracion>
-  docker compose --profile perf run --rm \
+  docker compose --profile perf run --rm -T \
     -e "DATASET=$DATASET" -e "VUS=$2" -e "DURATION=$3" -e "LABEL=$1" \
     -e "MIN_LEVEL=$MIN_LEVEL" -e "SHOW_DETAILS=$SHOW_DETAILS" \
     k6 run /perf/baseline.js
