@@ -535,6 +535,9 @@ public class MatchingUtils {
 			bqb.add(new TermQuery(new Term("tipo", "als")), MUST_NOT);
 		}
 
+		// B1: filtro por lista. Si no se especifican listas, se busca en todas (comportamiento previo).
+		addListFilter(bqb, search.getListIds());
+
 		if (search.getUpdatedAfter() != null) {
 			Query lpQuery = LongPoint.newRangeQuery("upd", search.getUpdatedAfter().getTime(), FUTUREDATE);
 			Query dvQuery = SortedNumericDocValuesField.newSlowRangeQuery("upd", search.getUpdatedAfter().getTime(),
@@ -561,6 +564,18 @@ public class MatchingUtils {
 			bqb2.add(new TermQuery(new Term(field, Utils.removeNonAlphaNumericAndSpaceAndLower(filter))), SHOULD);
 		});
 		bqb.add(bqb2.build(), occur);
+	}
+
+	// B1: filtra por listId. Se indexa como StringField sin analizar, asi que se matchea el valor
+	// literal (sin normalizar a minusculas como addTermsFromFilters) para no romper codigos tipo "MO"/"SY".
+	private void addListFilter(BooleanQuery.Builder bqb, List<String> listIds) {
+		if (listIds == null || listIds.isEmpty())
+			return;
+		BooleanQuery.Builder bqb2 = new BooleanQuery.Builder();
+		listIds.forEach(listId -> {
+			bqb2.add(new TermQuery(new Term("listId", listId)), SHOULD);
+		});
+		bqb.add(bqb2.build(), MUST);
 	}
 
 	public BooleanQuery getQuery(String field, String data) {

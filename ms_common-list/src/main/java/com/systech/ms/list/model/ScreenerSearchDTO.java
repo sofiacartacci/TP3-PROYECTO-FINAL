@@ -25,5 +25,8 @@ public class ScreenerSearchDTO {
 	
 	Date includeIfDeprecatedAfter;
 	boolean searchAliases=true;
+
+	// B1: listas a las que se restringe la busqueda masiva. Vacio/null = todas.
+	List<String> listIds;
 }
 

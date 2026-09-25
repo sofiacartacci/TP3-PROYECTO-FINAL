@@ -10,4 +10,7 @@ import lombok.Data;
 public class Reportado extends ReportadoAbstract {
 	@Id
 	public String ui;
+
+	// B1: lista/proveedor de origen del registro (proviene de mapping.id / providerId)
+	public String listId;
 }

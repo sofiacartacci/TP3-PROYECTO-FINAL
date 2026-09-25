@@ -154,6 +154,7 @@ public class FastloadItemWriter implements ItemWriter<Reportado> {
 			for (Reportado r : items) {
 				if (isUpdate(r)) {
 					r.setSysUpdate(new Date());
+					r.setListId(provider.getProviderId()); // B1: marca la lista de origen
 
 					Doc doc = new Doc(r);
 					indexNam(r, doc);
@@ -281,6 +282,9 @@ public class FastloadItemWriter implements ItemWriter<Reportado> {
 
 		document.add((IndexableField) new StringField("id", id, Store.YES));
 		document.add((IndexableField) new StringField("ui", doc.getUi(), Store.YES));
+		if (doc.getListId() != null) {
+			document.add((IndexableField) new StringField("listId", doc.getListId(), Store.YES));
+		}
 		document.add((IndexableField) new TextField("text", doc.getText(), Store.YES));
 		document.add((IndexableField) new StringField("tipo", doc.getFieldname(), Store.YES));
 
@@ -414,6 +418,7 @@ public class FastloadItemWriter implements ItemWriter<Reportado> {
 	@Data
 	private class Doc {
 		String ui;
+		String listId;
 		String text;
 		String fieldname;
 		String category;
@@ -426,6 +431,7 @@ public class FastloadItemWriter implements ItemWriter<Reportado> {
 
 		Doc(Reportado r) {
 			ui = r.getUi();
+			listId = r.getListId();
 			keywords = prepareKeywords(r.getKeywords());
 			countries = prepareCountries(r.getCountries());
 			category = r.getCategory();

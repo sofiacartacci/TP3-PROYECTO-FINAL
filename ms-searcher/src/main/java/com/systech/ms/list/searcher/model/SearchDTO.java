@@ -26,6 +26,10 @@ public class SearchDTO {
 	
 	Date includeIfDeprecatedAfter;
 	boolean searchAliases=true;
+
+	// B1: listas a las que se restringe la busqueda. Vacio/null = todas.
+	List<String> listIds;
+
 	boolean showDetails;	
 }
 

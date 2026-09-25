@@ -27,5 +27,8 @@ public class SearchQuery {
 	boolean searchAliases = true;
 	boolean showDetails;
 
+	// B1: listas a las que se restringe la busqueda. Vacio/null = todas (comportamiento previo).
+	List<String> listIds;
+
 	String user;
 }
